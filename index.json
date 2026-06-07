@@ -1,0 +1,16 @@
+{
+  "skills": [
+    {
+      "id": "git-summary",
+      "name": "Git Summary",
+      "description": "Summarize the current git repository: branch, recent commits, changed files, and overall health.",
+      "format": "agentskills",
+      "author": "tinyhumansai",
+      "version": "1.0.0",
+      "tags": ["git", "summary", "status"],
+      "download_url": "https://raw.githubusercontent.com/tinyhumansai/skill-registry/main/skills/git-summary/SKILL.md",
+      "stars": 0,
+      "updated_at": "2026-06-07T00:00:00Z"
+    }
+  ]
+}
