@@ -1,14 +1,11 @@
 ---
 name: hol-guard
 description: Protect supported local AI coding-agent runtimes with HOL Guard before mutation-bearing tool work.
-version: 1.0.0
 license: Apache-2.0
-author: "@kantorcodes"
-tags:
-  - security
-  - runtime-safety
-  - ai-agents
-  - coding-agents
+metadata:
+  author: "@kantorcodes"
+  version: "1.0.0"
+  tags: "security,runtime-safety,ai-agents,coding-agents"
 ---
 
 ## Instructions
@@ -51,14 +48,14 @@ Launch the supported harness through Guard:
 hol-guard run <harness> --json
 ```
 
-Treat a Guard deny, review-required decision, error, timeout, malformed result, unavailable runtime, or unhealthy installation as a stop condition for the protected mutation. Do not retry the same state-changing action through an unprotected agent session.
+Treat a Guard deny, review-required decision, error, malformed result, or unhealthy installation as a stop condition for the protected mutation. On fail-closed harness/event paths, an unavailable Guard runtime or timeout is also a stop condition. Some supported integrations are explicitly fail-open when their native hook crashes or times out; for those paths, do not claim the failure was blocked, and do not perform the state-changing operation unless an independently verified fail-closed protection path is in place. Never retry a blocked or unresolved state-changing action through an unprotected agent session.
 
 After work, inspect Guard-owned state and evidence as needed:
 
 ```bash
 hol-guard status --json
-hol-guard approvals list --json
-hol-guard receipts list --json
+hol-guard approvals --json
+hol-guard receipts --json
 ```
 
 If an approval is required, preserve the normal human approval flow. Do not fabricate or auto-resolve an approval.
@@ -67,7 +64,7 @@ If an approval is required, preserve the normal human approval flow. Do not fabr
 
 - HOL Guard protects supported local agent harness execution paths; it does not claim to run inside unrelated hosted products or APIs.
 - Keep the target service's native RBAC, validation, confirmation, audit, and safety controls authoritative.
-- Use `hol-guard detect --json` as the source of truth for current harness support.
+- Use `hol-guard detect --json` as the source of truth for current harness support and fail-open/fail-closed behavior documented by the installed Guard version.
 - Do not execute a destructive target action merely to test whether Guard would block it.
 - Guard Cloud is optional; local protection must not silently opt a user into cloud sync.
 
@@ -98,7 +95,7 @@ Agent: Not automatically. I must use `hol-guard detect --json` to identify a cur
 
 ## Dependencies
 
-- Python 3.9+
+- Python 3.10+
 - `pipx` recommended for isolated installation
 - `hol-guard` package from PyPI
 - A local AI coding-agent harness reported as supported by `hol-guard detect --json`
